@@ -14,6 +14,6 @@ namespace api.Data
             
         }
         public DbSet<Stock> Stocks{ get; set; } // represents the Stocks table in the database
-        public DbSet<Comment> Comments{ get; set; }
+        public DbSet<Comment> Comments{ get; set; } // maps the Comments table in the database from the Comment model
     }
 }
