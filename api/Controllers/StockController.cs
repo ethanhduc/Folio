@@ -52,7 +52,7 @@ namespace api.Controllers
         [HttpPost] 
         public async Task<IActionResult> Create([FromBody] CreateStockRequestDTO createStockDTO) //automatically deserialize JSON body into CreateStockRequestDTO object
         {
-            var stockModel = createStockDTO.ToStockFromCreateDTO(); // map from DTO to model
+            var stockModel = createStockDTO.ToStockFromCreateDTO(); // map from createStockDTO to model
             await _stockRepo.CreateAsync(stockModel);
             return CreatedAtAction(nameof(GetById), new { id = stockModel.Id }, stockModel.ToStockDTO()); // return 201 with location header pointing to new resource
         }

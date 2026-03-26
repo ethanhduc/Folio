@@ -52,6 +52,10 @@ namespace api.Controllers
             {
                 return BadRequest("Stock does not exist");
             }
+
+            var commentModel = commentDTO.ToCommentFromCreate(stockId); // map from createCommentDTO to model, passing in stockId from route
+            await _commentRepo.CreateAsync(commentModel);
+            return CreatedAtAction(nameof(GetById), new { id = commentModel.Id}, commentModel.ToCommentDTO());
         }
     }
 }
