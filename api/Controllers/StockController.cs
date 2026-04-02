@@ -31,7 +31,7 @@ namespace api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] QueryObject query)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid) // enforce data validation on the query parameters
                 return BadRequest(ModelState);
                 
             var stocks = await _stockRepo.GetAllAsync(query); // get all stocks from the repository
