@@ -57,7 +57,7 @@ namespace api.Controllers
         }
 
         [HttpPost] 
-        public async Task<IActionResult> Create([FromBody] CreateStockRequestDTO createStockDTO) //automatically deserialize JSON body into CreateStockRequestDTO object
+        public async Task<IActionResult> Create([FromBody] CreateStockRequestDTO createStockDTO) //From Body automatically deserialize JSON body into CreateStockRequestDTO object
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
