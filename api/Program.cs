@@ -14,6 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
+// prevent circular reference issues 
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
 {
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
@@ -25,7 +26,7 @@ builder.Services.AddDbContext<ApplicationDBContext>(options => {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
-// add identity services to the service container, specifying the AppUser class as the user entity and configuring password requirements
+// add identity services to service container -> specifying AppUser class as the user + configuring password requirements
 builder.Services.AddIdentity<AppUser, IdentityRole>(options => {
     options.Password.RequireDigit = true;
     options.Password.RequireLowercase = true;
@@ -33,10 +34,10 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(options => {
     options.Password.RequireNonAlphanumeric = true;
     options.Password.RequiredLength = 12;
 })
-.AddEntityFrameworkStores<ApplicationDBContext>(); // configure identity to use the ApplicationDBContext for storing user information in the database
+.AddEntityFrameworkStores<ApplicationDBContext>(); // configure identity to use the ApplicationDBContext
 
+// hook up authentication -> configure it to use JWT bearer tokens for authentication (token validation params specified in appsettings.json)
 //Could just use default, but will configure here 
-// add authentication services to the service container and configure it to use JWT bearer tokens for authentication, with token validation parameters specified in appsettings.json
 builder.Services.AddAuthentication(options => {
     options.DefaultAuthenticateScheme =
     options.DefaultChallengeScheme = 
@@ -71,6 +72,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+// add authentication and authorization middleware to the request pipeline, so incoming requests are authenticated and authorized based on configured auth scheme
 app.UseAuthentication(); 
 app.UseAuthorization();
 
