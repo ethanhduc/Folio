@@ -22,12 +22,14 @@ namespace api.Service
         }
         public string CreateToken(AppUser user)
         {
+            // claims are pieces of info about user included in token
             var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
                 new Claim(JwtRegisteredClaimNames.GivenName, user.UserName)
             };
 
+            // signing credentials will be used to sign token (from browser) with secret key and specify algorithm
             var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
 
             //object respresentation of the token
@@ -40,8 +42,8 @@ namespace api.Service
                 Audience = _config["JWT:Audience"]
             };
 
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var token = tokenHandler.CreateToken(tokenDescriptor);
+            var tokenHandler = new JwtSecurityTokenHandler(); //instantiate token handler to create and write token
+            var token = tokenHandler.CreateToken(tokenDescriptor); //creates token instance based on the descriptor
             return tokenHandler.WriteToken(token); //returns the token as a string from object
         }
     }
