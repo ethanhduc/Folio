@@ -30,8 +30,8 @@ namespace api.Controllers
         {
             if (!ModelState.IsValid) //since we have complex data type
                 return BadRequest(ModelState);
+
             var user = await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == loginDTO.Username.ToLower());
-            
             if (user == null) return Unauthorized("Invalid username!");
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, loginDTO.Password, false);
