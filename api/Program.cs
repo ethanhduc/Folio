@@ -74,7 +74,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// add authentication and authorization middleware to the request pipeline, so incoming requests are authenticated and authorized based on configured auth scheme
+// add authentication and authorization middleware to the request pipeline
 app.UseAuthentication(); 
 app.UseAuthorization();
 
