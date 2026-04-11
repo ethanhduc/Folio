@@ -45,7 +45,7 @@ builder.Services.AddAuthentication(options => {
     options.DefaultForbidScheme =
     options.DefaultSignInScheme =
     options.DefaultSignOutScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(options => {
+}).AddJwtBearer(options => { //validates all incoming bearer tokens w/params
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = true,
