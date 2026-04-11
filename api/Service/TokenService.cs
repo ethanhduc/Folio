@@ -22,7 +22,7 @@ namespace api.Service
         }
         public string CreateToken(AppUser user)
         {
-            // claims are pieces of info about user included in token
+            // claims are pieces of info about user embedded in token
             var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
