@@ -8,6 +8,15 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
+try
+{
+    DotNetEnv.Env.Load(System.IO.Path.Combine(Directory.GetCurrentDirectory(), ".env"));
+}
+catch (System.IO.FileNotFoundException)
+{
+    // Allow startup when local .env is missing.
+}
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.

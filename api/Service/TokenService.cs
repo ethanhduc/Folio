@@ -14,7 +14,7 @@ namespace api.Service
     public class TokenService : ITokenService
     {
         private readonly IConfiguration _config;
-        private readonly SymmetricSecurityKey _key;
+        private readonly SymmetricSecurityKey _key; //encrypts the token with a secret key to prevent tampering
         public TokenService(IConfiguration config) //inject configuration to get the secret key from appsettings.json
         {
             _config = config;
