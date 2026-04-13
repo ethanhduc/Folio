@@ -22,7 +22,7 @@ namespace api.Data
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<Portfolio>(x => x.HasKey(p => new { p.AppUserId, p.StockId })); //foreign key 
+            builder.Entity<Portfolio>(x => x.HasKey(p => new { p.AppUserId, p.StockId })); //set composite key
 
             builder.Entity<Portfolio>()
                 .HasOne(u => u.AppUser)
