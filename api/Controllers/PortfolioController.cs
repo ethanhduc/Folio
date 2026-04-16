@@ -31,6 +31,7 @@ namespace api.Controllers
         {
             var username = User.GetUsername();
             var appUser = await _userManager.FindByNameAsync(username); //holds user object after finding it by username
+            
             var userPortfolio = await _portfolioRepo.GetUserPortfolio(appUser); //pull all records associated with userId then return stocks associated with that user
             return Ok(userPortfolio);
         }
