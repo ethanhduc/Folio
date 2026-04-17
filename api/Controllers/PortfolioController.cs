@@ -42,11 +42,11 @@ namespace api.Controllers
         {
             var username = User.GetUsername(); //get username from claims extension method
             var appUser = await _userManager.FindByNameAsync(username); 
-            var stock = await _stockRepo.GetBySymbolAsync(symbol); 
 
+            var stock = await _stockRepo.GetBySymbolAsync(symbol); // get stock by symbol checking if its in DB
             if(stock == null) return BadRequest("Stock not found");
 
-            var userPortfolio = await _portfolioRepo.GetUserPortfolio(appUser);
+            var userPortfolio = await _portfolioRepo.GetUserPortfolio(appUser); 
             if(userPortfolio.Any(e => e.Symbol.ToLower() == symbol.ToLower())) return BadRequest("Cannot add same stock to portfolio");
 
             var portfolioModel = new Portfolio
