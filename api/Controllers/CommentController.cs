@@ -8,6 +8,7 @@ using api.Interfaces;
 using api.Mappers;
 using api.Models;
 using api.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -57,6 +58,7 @@ namespace api.Controllers
         }
 
         [HttpPost("{stockId:int}")]
+        [Authorize]
         public async Task<IActionResult> Create([FromRoute] int stockId, CreateCommentDTO commentDTO)
         {
             if (!ModelState.IsValid)
@@ -69,6 +71,7 @@ namespace api.Controllers
 
             var username = User.GetUsername();
             var appUser = await _userManager.FindByNameAsync(username);
+            if (appUser == null) return Unauthorized();
 
             var commentModel = commentDTO.ToCommentFromCreate(stockId); // map from createCommentDTO to model, passing in stockId from route
             commentModel.AppUserId = appUser.Id; // set AppUserId to comment from AppUser

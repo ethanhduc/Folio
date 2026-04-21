@@ -38,7 +38,7 @@ namespace api.Controllers
                 
             var stocks = await _stockRepo.GetAllAsync(query); // get all stocks from the repository
              
-            var stockDTOs = stocks.Select(s => s.ToStockDTO()); // map to DTOs
+            var stockDTOs = stocks.Select(s => s.ToStockDTO()).ToList(); // map to DTOs
 
             return Ok(stockDTOs);
         }
